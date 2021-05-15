@@ -22,6 +22,6 @@ app.get('/',(req,res)=>{
 
 
 // mongoose.connect('m')
-mongoose.connect('mongodb://localhost:27017/server', {useNewUrlParser: true, useUnifiedTopology: true } )
+mongoose.connect('mongodb://localhost/JobSeeker', {useNewUrlParser: true, useUnifiedTopology: true } );
 
 app.listen(port);

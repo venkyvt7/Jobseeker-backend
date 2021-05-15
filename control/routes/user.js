@@ -53,6 +53,17 @@ router.post('/register',async  (req,res)=>{
     const  {email,username,password,desiredpostion}=req.body;
     console.log(email,username,password,desiredpostion);
     try {
+      const user1 = await User.findOne({ email });
+
+     if(user1)
+     {
+       res.send("error")
+
+     }
+
+     else
+     {
+
 		const user = await User.create({
             email:email,
 			username:username,
@@ -65,6 +76,7 @@ router.post('/register',async  (req,res)=>{
 		console.log('User created successfully: ', user)
     res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge*1000});
     res.status(201).json({user:user._id})
+  }
 	} catch (error) {
 		if (error.code === 11000) {
 		

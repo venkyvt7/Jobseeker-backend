@@ -3,6 +3,7 @@ const User=require('../../model/db/dbadminregister.js')
 const jwt=require('jsonwebtoken')
 const router = express.Router();
 const maxAge=3*24*60*60;
+
 const createToken=(id)=>{
 
   return jwt.sign({id},'FULCRUMADMIN',{
@@ -47,14 +48,26 @@ router.get('/login',async (req,res)=>{
 })
 
 router.post('/register',async  (req,res)=>{
-
-    const  {email,username,password}=req.body;
-    console.log(email,username,password);
+  // desiredpostion
+    const  {email,username,password,desiredpostion}=req.body;
+    console.log(email,username,password,desiredpostion);
     try {
+      const user1 = await User.findOne({ email });
+
+     if(user1)
+     {
+       res.send("error")
+
+     }
+
+     else
+     {
+
 		const user = await User.create({
             email:email,
 			username:username,
-			password:password
+			password:password,
+      desiredpostion:desiredpostion
 		})
 
 
@@ -62,8 +75,8 @@ router.post('/register',async  (req,res)=>{
 		console.log('User created successfully: ', user)
     res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge*1000});
     res.status(201).json({user:user._id})
+  }
 	} catch (error) {
-    console.log(error)
 		if (error.code === 11000) {
 		
 			return res.json({ status: 'error', error: 'Email is already in use' })
