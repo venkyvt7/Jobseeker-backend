@@ -17,17 +17,21 @@ app.use('/user', user);
 
 app.use('/admin', admin);
 
-app.get('/offers', (req, res) => {
+app.get('/offers', async(req, res) => {
 
+let dataa;
+console.log(32232);
+ axios.get('https://api.infojobs.net/api/7/offer', {
+        headers
+:{    "Authorization": "Basic M2UxNjRiOWUwZmM2NGYwY2FlM2JlMjEzODBiYTBmMWE6RE10enREdldrd3hCOG02UVlremVCbEJLZFhWTFNnK0Iyd0hSUU40L25xTk9qZ1RLdEY="
+}
 
-   return axios.get('https://api.infojobs.net/api/7/offer', {
-        "Authorization": "Basic M2UxNjRiOWUwZmM2NGYwY2FlM2JlMjEzODBiYTBmMWE6RE10enREdldrd3hCOG02UVlremVCbEJLZFhWTFNnK0Iyd0hSUU40L25xTk9qZ1RLdEY="
+    }).then(res1=>res.json(res1.data)).catch();
 
+    // const res2=await res1.json();
 
-    }).then(res1=> res.send(res1.data)).catch();
-
-    console.log(offers);
-    res.send(offers);
+   
+    // res.json(res2);
     // res.send("hello")
 })
 
