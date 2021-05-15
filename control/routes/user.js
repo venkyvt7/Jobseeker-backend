@@ -15,7 +15,7 @@ const createToken=(id)=>{
 
 
 
-router.get('/login',async (req,res)=>{
+router.post('/login',async (req,res)=>{
 
     let { email, password } = req.body;
    
@@ -37,7 +37,12 @@ router.get('/login',async (req,res)=>{
       const token=createToken(user._id);
       console.log('User created successfully: ', user)
       res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge*1000});
-      res.status(201).json({user:user._id})
+      userFormated = {
+        username: user.username,
+        email:user.email,
+        position: user.position
+      }
+      res.status(201).json(userFormated);
       }
 
       else
@@ -76,13 +81,13 @@ router.post('/register', (req,res)=>{
   //   }
 	// }
   let body = req.body;
-    let { username, email, password, desiredposition } = body;
-    console.log(username)
+    let { username, email, password, position } = body;
+    console.log(position)
   
     User.create({
       username,
       email,
-      desiredposition,
+      position,
       password
     })
     .then(user => {

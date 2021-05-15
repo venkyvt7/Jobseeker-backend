@@ -27,7 +27,7 @@ const register= mongoose.Schema({
             message: 'The password required any capital letter and any number'
         }
     },
-    desiredposition:String
+    position:String
 });
 
 const SignUp=mongoose.model("usersignup",register);
