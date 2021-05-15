@@ -1,13 +1,14 @@
 const express= require('express');
 const mongoose=require('mongoose');
-
+const cors=require('cors')
 
 const app=express();
-const port =process.env.PORT||3000;
+const port =process.env.PORT||4200;
 
 var user= require('./control/routes/user');
 var admin= require('./control/routes/admin');
 const bodyParser = require("body-parser");
+app.use(cors());
 app.use(bodyParser.json());
 app.use('/user', user);
 
