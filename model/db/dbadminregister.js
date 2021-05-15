@@ -24,6 +24,6 @@ const register=new Schema({
 
 })
 
-const SignUp=mongoose.model("SignUp",register);
+const SignUp=mongoose.model("adminsingup",register);
 
 module.exports=SignUp;
