@@ -20,6 +20,9 @@ const register=new Schema({
             type:String,
              required:true
              
+         },
+         desiredpostion:{
+             type:String
          }
 
 })

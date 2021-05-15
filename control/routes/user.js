@@ -49,14 +49,15 @@ router.get('/login',async (req,res)=>{
 })
 
 router.post('/register',async  (req,res)=>{
-
-    const  {email,username,password}=req.body;
-    console.log(email,username,password);
+  // desiredpostion
+    const  {email,username,password,desiredpostion}=req.body;
+    console.log(email,username,password,desiredpostion);
     try {
 		const user = await User.create({
             email:email,
 			username:username,
-			password:password
+			password:password,
+      desiredpostion:desiredpostion
 		})
 
 
