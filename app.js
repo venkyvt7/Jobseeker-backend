@@ -3,13 +3,15 @@ const mongoose=require('mongoose');
 const cors=require('cors')
 
 const app=express();
-const port =process.env.PORT||4200;
+const PORT = 3000;
 
 var user= require('./control/routes/user');
 var admin= require('./control/routes/admin');
-const bodyParser = require("body-parser");
+
+mongoose.connect('mongodb://localhost/JobSeeker', {useNewUrlParser: true, useUnifiedTopology: true } );
+
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 app.use('/user', user);
 
 app.use('/admin', admin);
@@ -22,6 +24,6 @@ app.get('/',(req,res)=>{
 
 
 // mongoose.connect('m')
-mongoose.connect('mongodb://localhost:27017/server', {useNewUrlParser: true, useUnifiedTopology: true } )
+// mongoose.connect('mongodb://localhost:27017/server')
 
-app.listen(port);
+app.listen(PORT);

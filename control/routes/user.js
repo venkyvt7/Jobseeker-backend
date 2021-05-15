@@ -48,33 +48,53 @@ router.get('/login',async (req,res)=>{
     }
 })
 
-router.post('/register',async  (req,res)=>{
+router.post('/register', (req,res)=>{
   // desiredpostion
-    const  {email,username,password,desiredpostion}=req.body;
-    console.log(email,username,password,desiredpostion);
-    try {
-		const user = await User.create({
-            email:email,
-			username:username,
-			password:password,
-      desiredpostion:desiredpostion
-		})
+  //   const  {email,username,password,desiredposition}=req.body;
+  //   console.log(email,username,password,desiredposition);
+  //   try {
+	// 	const user = await User.create({
+  //           email:email,
+	// 		username:username,
+	// 		password:password,
+  //     desiredposition:desiredposition
+	// 	})
 
 
-    const token=createToken(user._id);
-		console.log('User created successfully: ', user)
-    res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge*1000});
-    res.status(201).json({user:user._id})
-	} catch (error) {
-		if (error.code === 11000) {
+  //   const token=createToken(user._id);
+	// 	console.log('User created successfully: ', user)
+  //   res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge*1000});
+  //   res.status(201).json({user:user._id})
+	// } catch (error) {
+	// 	if (error.code === 11000) {
 		
-			return res.json({ status: 'error', error: 'Email is already in use' })
-		}
-		else
-    {
-      res.send("error")
-    }
-	}
+	// 		return res.json({ status: 'error', error: 'Email is already in use' })
+	// 	}
+	// 	else
+  //   {
+  //     res.send(error)
+  //   }
+	// }
+  let body = req.body;
+    let { username, email, password, desiredposition } = body;
+    console.log(username)
+  
+    User.create({
+      username,
+      email,
+      desiredposition,
+      password
+    })
+    .then(user => {
+      const token=createToken(user._id);
+	    console.log('User created successfully: ', user)
+      res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge*1000});
+      delete user.password;
+      return res.status(200).json(user)
+    })
+    .catch(err => {
+        return res.status(400).send('This user just exist');
+    });
 
     
   //  res.send("eeee");
